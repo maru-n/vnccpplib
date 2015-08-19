@@ -15,10 +15,30 @@ BOOST_PYTHON_MODULE(vectornav)
     .def_readwrite("w", &VnQuaternion::w);
 
 
+    // vn_linearAlgebra.h
+    boost::python::class_<VnVector3>("VnVector3")
+    .def_readwrite("c0", &VnVector3::c0)
+    .def_readwrite("c1", &VnVector3::c1)
+    .def_readwrite("c2", &VnVector3::c2);
+    boost::python::class_<VnMatrix3x3>("VnMatrix3x3")
+    .def_readwrite("c00", &VnMatrix3x3::c00)
+    .def_readwrite("c01", &VnMatrix3x3::c01)
+    .def_readwrite("c02", &VnMatrix3x3::c02)
+    .def_readwrite("c10", &VnMatrix3x3::c10)
+    .def_readwrite("c11", &VnMatrix3x3::c11)
+    .def_readwrite("c12", &VnMatrix3x3::c12)
+    .def_readwrite("c20", &VnMatrix3x3::c20)
+    .def_readwrite("c21", &VnMatrix3x3::c21)
+    .def_readwrite("c22", &VnMatrix3x3::c22);
+
+
     // vndevice.h (not implemented all)
     boost::python::class_<VnDeviceCompositeData>("VnDeviceCompositeData")
     .def_readwrite("ypr", &VnDeviceCompositeData::ypr)
-    .def_readwrite("quaternion", &VnDeviceCompositeData::quaternion);
+    .def_readwrite("quaternion", &VnDeviceCompositeData::quaternion)
+    .def_readwrite("magnetic", &VnDeviceCompositeData::magnetic)
+    .def_readwrite("acceleration", &VnDeviceCompositeData::acceleration)
+    .def_readwrite("angularRate", &VnDeviceCompositeData::angularRate);
 
     boost::python::scope().attr("VNASYNC_OFF") = VNASYNC_OFF;
     boost::python::scope().attr("VNASYNC_VNYPR") = VNASYNC_VNYPR;
