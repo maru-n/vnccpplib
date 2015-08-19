@@ -6,12 +6,20 @@ import sys
 
 vn100 = vectornav.Vn100()
 
-
 device = sys.argv[1]
-err = vectornav.vn100_connect(vn100, device, 115200)
-print(err)
-err = vectornav.vn100_setAsynchronousDataOutputType(vn100, 1, True)
-print(err)
+
+err_code = vectornav.vn100_connect(vn100, device, 115200)
+if err_code != vectornav.VNERR_NO_ERROR:
+    print('Error code: %d' % err_code)
+    exit()
+
+err_code = vectornav.vn100_setAsynchronousDataOutputType(
+    vn100,
+    vectornav.VNASYNC_VNYPR,
+    True)
+if err_code != vectornav.VNERR_NO_ERROR:
+    print('Error code: %d' % err_code)
+    exit()
 
 for i in range(30):
     data = vectornav.VnDeviceCompositeData()
