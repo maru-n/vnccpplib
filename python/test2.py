@@ -27,7 +27,7 @@ if err_code != VNERR_NO_ERROR:
 err_code = vn100_setBinaryOutput1Configuration(
     vn100,
     BINARY_ASYNC_MODE_SERIAL_2,
-    100,
+    2,
     BG1_YPR,
     BG3_NONE,
     BG5_NONE,
@@ -39,7 +39,7 @@ if err_code != VNERR_NO_ERROR:
 err_code = vn100_registerAsyncDataReceivedListener(vn100, listener);
 
 while True:
-    pass
+    time.sleep(0.1)
 
 err_code = vn100_unregisterAsyncDataReceivedListener(vn100, listener);
 err_code = vn100_disconnect(vn100);

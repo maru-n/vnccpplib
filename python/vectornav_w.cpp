@@ -9,7 +9,10 @@
 boost::python::api::object py_async_data_received_listener;
 void async_data_received_listener_wrapper(void* sender, VnDeviceCompositeData* data)
 {
+    PyGILState_STATE gstate;
+    gstate = PyGILState_Ensure();
     py_async_data_received_listener((VnDevice*)sender, data);
+    PyGILState_Release(gstate);
 }
 VN_ERROR_CODE vn100_registerAsyncDataReceivedListener_wrapper(
     Vn100* vn100,
@@ -17,8 +20,8 @@ VN_ERROR_CODE vn100_registerAsyncDataReceivedListener_wrapper(
 {
     py_async_data_received_listener = listener;
     return vn100_registerAsyncDataReceivedListener(vn100, &async_data_received_listener_wrapper);
-}
 
+}
 DLL_EXPORT VN_ERROR_CODE vn100_unregisterAsyncDataReceivedListener_wrapper(
     Vn100* vn100,
     boost::python::api::object listener)
