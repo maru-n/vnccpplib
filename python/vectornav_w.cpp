@@ -1,5 +1,30 @@
 #include <boost/python.hpp>
 #include "vectornav.h"
+/*
+#include <string>
+#include <typeinfo>
+#include <cxxabi.h>
+*/
+
+boost::python::api::object py_async_data_received_listener;
+void async_data_received_listener_wrapper(void* sender, VnDeviceCompositeData* data)
+{
+    py_async_data_received_listener((VnDevice*)sender, data);
+}
+VN_ERROR_CODE vn100_registerAsyncDataReceivedListener_wrapper(
+    Vn100* vn100,
+    boost::python::api::object listener)
+{
+    py_async_data_received_listener = listener;
+    return vn100_registerAsyncDataReceivedListener(vn100, &async_data_received_listener_wrapper);
+}
+
+DLL_EXPORT VN_ERROR_CODE vn100_unregisterAsyncDataReceivedListener_wrapper(
+    Vn100* vn100,
+    boost::python::api::object listener)
+{
+    return vn100_unregisterAsyncDataReceivedListener(vn100, &async_data_received_listener_wrapper);
+}
 
 BOOST_PYTHON_MODULE(vectornav)
 {
@@ -33,12 +58,70 @@ BOOST_PYTHON_MODULE(vectornav)
 
 
     // vndevice.h (not implemented all)
+    boost::python::class_<VnDevice>("VnDevice");
     boost::python::class_<VnDeviceCompositeData>("VnDeviceCompositeData")
     .def_readwrite("ypr", &VnDeviceCompositeData::ypr)
     .def_readwrite("quaternion", &VnDeviceCompositeData::quaternion)
     .def_readwrite("magnetic", &VnDeviceCompositeData::magnetic)
     .def_readwrite("acceleration", &VnDeviceCompositeData::acceleration)
-    .def_readwrite("angularRate", &VnDeviceCompositeData::angularRate);
+    .def_readwrite("angularRate", &VnDeviceCompositeData::angularRate)
+    .def_readwrite("dcm", &VnDeviceCompositeData::dcm)
+    .def_readwrite("temperature", &VnDeviceCompositeData::temperature)
+    .def_readwrite("magneticVoltage", &VnDeviceCompositeData::magneticVoltage)
+    .def_readwrite("accelerationVoltage", &VnDeviceCompositeData::accelerationVoltage)
+    .def_readwrite("angularRateVoltage", &VnDeviceCompositeData::angularRateVoltage)
+    .def_readwrite("temperatureVoltage", &VnDeviceCompositeData::temperatureVoltage)
+    .def_readwrite("angularRateBias", &VnDeviceCompositeData::angularRateBias)
+    .def_readwrite("attitudeVariance", &VnDeviceCompositeData::attitudeVariance)
+    .def_readwrite("angularRateBiasVariance", &VnDeviceCompositeData::angularRateBiasVariance)
+    .def_readwrite("timeStartup", &VnDeviceCompositeData::timeStartup)
+    .def_readwrite("timeGps", &VnDeviceCompositeData::timeGps)
+    .def_readwrite("timeSyncIn", &VnDeviceCompositeData::timeSyncIn)
+    .def_readwrite("latitudeLongitudeAltitude", &VnDeviceCompositeData::latitudeLongitudeAltitude)
+    .def_readwrite("velocity", &VnDeviceCompositeData::velocity)
+    .def_readwrite("angularRateUncompensated", &VnDeviceCompositeData::angularRateUncompensated)
+    .def_readwrite("accelerationUncompensated", &VnDeviceCompositeData::accelerationUncompensated)
+    .def_readwrite("magneticUncompensated", &VnDeviceCompositeData::magneticUncompensated)
+    .def_readwrite("pressure", &VnDeviceCompositeData::pressure)
+    .def_readwrite("deltaTime", &VnDeviceCompositeData::deltaTime)
+    .def_readwrite("deltaTheta", &VnDeviceCompositeData::deltaTheta)
+    .def_readwrite("deltaVelocity", &VnDeviceCompositeData::deltaVelocity)
+    .def_readwrite("insStatus", &VnDeviceCompositeData::insStatus)
+    .def_readwrite("syncInCnt", &VnDeviceCompositeData::syncInCnt)
+    .def_readwrite("timeGpsPps", &VnDeviceCompositeData::timeGpsPps)
+    .def_readwrite("gpsTowSec", &VnDeviceCompositeData::gpsTowSec)
+    .def_readwrite("gpsTowNs", &VnDeviceCompositeData::gpsTowNs)
+    .def_readwrite("gpsWeek", &VnDeviceCompositeData::gpsWeek)
+    .def_readwrite("timeUtc", &VnDeviceCompositeData::timeUtc)
+    .def_readwrite("sensSat", &VnDeviceCompositeData::sensSat)
+    .def_readwrite("numSats", &VnDeviceCompositeData::numSats)
+    .def_readwrite("gpsFix", &VnDeviceCompositeData::gpsFix)
+    .def_readwrite("gpsPosEcef", &VnDeviceCompositeData::gpsPosEcef)
+    .def_readwrite("gpsVelEcef", &VnDeviceCompositeData::gpsVelEcef)
+    .def_readwrite("gpsPosU", &VnDeviceCompositeData::gpsPosU)
+    .def_readwrite("gpsVelU", &VnDeviceCompositeData::gpsVelU)
+    .def_readwrite("timeU", &VnDeviceCompositeData::timeU)
+    .def_readwrite("timeAccSec", &VnDeviceCompositeData::timeAccSec)
+    .def_readwrite("vpeStatus", &VnDeviceCompositeData::vpeStatus)
+    .def_readwrite("magNed", &VnDeviceCompositeData::magNed)
+    .def_readwrite("accelNed", &VnDeviceCompositeData::accelNed)
+    .def_readwrite("linearAccelBody", &VnDeviceCompositeData::linearAccelBody)
+    .def_readwrite("linearAccelNed", &VnDeviceCompositeData::linearAccelNed)
+    .def_readwrite("yprU", &VnDeviceCompositeData::yprU)
+    .def_readwrite("velBody", &VnDeviceCompositeData::velBody)
+    .def_readwrite("velNed", &VnDeviceCompositeData::velNed)
+    .def_readwrite("gpsPosLla", &VnDeviceCompositeData::gpsPosLla)
+    .def_readwrite("gpsVelocity", &VnDeviceCompositeData::gpsVelocity)
+    .def_readwrite("posEcef", &VnDeviceCompositeData::posEcef)
+    .def_readwrite("velEcef", &VnDeviceCompositeData::velEcef)
+    .def_readwrite("magEcef", &VnDeviceCompositeData::magEcef)
+    .def_readwrite("accelEcef", &VnDeviceCompositeData::accelEcef)
+    .def_readwrite("linearAccelEcef", &VnDeviceCompositeData::linearAccelEcef)
+    .def_readwrite("posU", &VnDeviceCompositeData::posU)
+    .def_readwrite("velU", &VnDeviceCompositeData::velU)
+    .def_readwrite("attitudeUncertainty", &VnDeviceCompositeData::attitudeUncertainty);
+
+    //boost::python::def( "VnDeviceNewAsyncDataReceivedListener", &VnDeviceNewAsyncDataReceivedListener );
 
     boost::python::scope().attr("VNASYNC_OFF") = VNASYNC_OFF;
     boost::python::scope().attr("VNASYNC_VNYPR") = VNASYNC_VNYPR;
@@ -66,6 +149,87 @@ BOOST_PYTHON_MODULE(vectornav)
     boost::python::scope().attr("VNASYNC_VNCMV") = VNASYNC_VNCMV;
     boost::python::scope().attr("VNASYNC_VNSTV") = VNASYNC_VNSTV;
     boost::python::scope().attr("VNASYNC_VNCOV") = VNASYNC_VNCOV;
+    boost::python::scope().attr("BINARY_ASYNC_MODE_NONE") = BINARY_ASYNC_MODE_NONE;
+    boost::python::scope().attr("BINARY_ASYNC_MODE_SERIAL_1") = BINARY_ASYNC_MODE_SERIAL_1;
+    boost::python::scope().attr("BINARY_ASYNC_MODE_SERIAL_2") = BINARY_ASYNC_MODE_SERIAL_2;
+    boost::python::scope().attr("BINARY_ASYNC_MODE_SERIAL_1_AND_2") = BINARY_ASYNC_MODE_SERIAL_1_AND_2;
+
+    boost::python::scope().attr("BG1_NONE") = BG1_NONE;
+    boost::python::scope().attr("BG1_TIME_STARTUP") = BG1_TIME_STARTUP;
+    boost::python::scope().attr("BG1_TIME_GPS") = BG1_TIME_GPS;
+    boost::python::scope().attr("BG1_TIME_SYNC_IN") = BG1_TIME_SYNC_IN;
+    boost::python::scope().attr("BG1_YPR") = BG1_YPR;
+    boost::python::scope().attr("BG1_QTN") = BG1_QTN;
+    boost::python::scope().attr("BG1_ANGULAR_RATE") = BG1_ANGULAR_RATE;
+    boost::python::scope().attr("BG1_POSITION") = BG1_POSITION;
+    boost::python::scope().attr("BG1_VELOCITY") = BG1_VELOCITY;
+    boost::python::scope().attr("BG1_ACCEL") = BG1_ACCEL;
+    boost::python::scope().attr("BG1_IMU") = BG1_IMU;
+    boost::python::scope().attr("BG1_MAG_PRES") = BG1_MAG_PRES;
+    boost::python::scope().attr("BG1_DELTA_THETA") = BG1_DELTA_THETA;
+    boost::python::scope().attr("BG1_INS_STATUS") = BG1_INS_STATUS;
+    boost::python::scope().attr("BG1_SYNC_IN_CNT") = BG1_SYNC_IN_CNT;
+
+    boost::python::scope().attr("BG2_NONE") = BG2_NONE;
+    boost::python::scope().attr("BG2_TIME_STARTUP") = BG2_TIME_STARTUP;
+    boost::python::scope().attr("BG2_TIME_GPS") = BG2_TIME_GPS;
+    boost::python::scope().attr("BG2_GPS_TOW") = BG2_GPS_TOW;
+    boost::python::scope().attr("BG2_GPS_WEEK") = BG2_GPS_WEEK;
+    boost::python::scope().attr("BG2_TIME_SYNC_IN") = BG2_TIME_SYNC_IN;
+    boost::python::scope().attr("BG2_TIME_PPS") = BG2_TIME_PPS;
+    boost::python::scope().attr("BG2_TIME_UTC") = BG2_TIME_UTC;
+    boost::python::scope().attr("BG2_SYNC_IN_CNT") = BG2_SYNC_IN_CNT;
+
+    boost::python::scope().attr("BG3_NONE") = BG3_NONE;
+    boost::python::scope().attr("BG3_UNCOMP_MAG") = BG3_UNCOMP_MAG;
+    boost::python::scope().attr("BG3_UNCOMP_ACCEL") = BG3_UNCOMP_ACCEL;
+    boost::python::scope().attr("BG3_UNCOMP_GYRO") = BG3_UNCOMP_GYRO;
+    boost::python::scope().attr("BG3_TEMP") = BG3_TEMP;
+    boost::python::scope().attr("BG3_PRES") = BG3_PRES;
+    boost::python::scope().attr("BG3_DELTA_THETA") = BG3_DELTA_THETA;
+    boost::python::scope().attr("BG3_DELTA_V") = BG3_DELTA_V;
+    boost::python::scope().attr("BG3_MAG") = BG3_MAG;
+    boost::python::scope().attr("BG3_ACCEL") = BG3_ACCEL;
+    boost::python::scope().attr("BG3_GYRO") = BG3_GYRO;
+    boost::python::scope().attr("BG3_SENS_SAT") = BG3_SENS_SAT;
+
+    boost::python::scope().attr("BG4_NONE") = BG4_NONE;
+    boost::python::scope().attr("BG4_UTC") = BG4_UTC;
+    boost::python::scope().attr("BG4_TOW") = BG4_TOW;
+    boost::python::scope().attr("BG4_WEEK") = BG4_WEEK;
+    boost::python::scope().attr("BG4_NUM_SATS") = BG4_NUM_SATS;
+    boost::python::scope().attr("BG4_FIX") = BG4_FIX;
+    boost::python::scope().attr("BG4_POS_LLA") = BG4_POS_LLA;
+    boost::python::scope().attr("BG4_POS_ECEF") = BG4_POS_ECEF;
+    boost::python::scope().attr("BG4_VEL_NED") = BG4_VEL_NED;
+    boost::python::scope().attr("BG4_VEL_ECEF") = BG4_VEL_ECEF;
+    boost::python::scope().attr("BG4_POS_U") = BG4_POS_U;
+    boost::python::scope().attr("BG4_VEL_U") = BG4_VEL_U;
+    boost::python::scope().attr("BG4_TIME_U") = BG4_TIME_U;
+
+    boost::python::scope().attr("BG5_NONE") = BG5_NONE;
+    boost::python::scope().attr("BG5_VPE_STATUS") = BG5_VPE_STATUS;
+    boost::python::scope().attr("BG5_YPR") = BG5_YPR;
+    boost::python::scope().attr("BG5_QUATERNION") = BG5_QUATERNION;
+    boost::python::scope().attr("BG5_DCM") = BG5_DCM;
+    boost::python::scope().attr("BG5_MAG_NED") = BG5_MAG_NED;
+    boost::python::scope().attr("BG5_ACCEL_NED") = BG5_ACCEL_NED;
+    boost::python::scope().attr("BG5_LINEAR_ACCEL_BODY") = BG5_LINEAR_ACCEL_BODY;
+    boost::python::scope().attr("BG5_LINEAR_ACCEL_NED") = BG5_LINEAR_ACCEL_NED;
+    boost::python::scope().attr("BG5_YPR_U") = BG5_YPR_U;
+
+    boost::python::scope().attr("BG6_NONE") = BG6_NONE;
+    boost::python::scope().attr("BG6_INS_STATUS") = BG6_INS_STATUS;
+    boost::python::scope().attr("BG6_POS_LLA") = BG6_POS_LLA;
+    boost::python::scope().attr("BG6_POS_ECEF") = BG6_POS_ECEF;
+    boost::python::scope().attr("BG6_VEL_BODY") = BG6_VEL_BODY;
+    boost::python::scope().attr("BG6_VEL_NED") = BG6_VEL_NED;
+    boost::python::scope().attr("BG6_VEL_ECEF") = BG6_VEL_ECEF;
+    boost::python::scope().attr("BG6_MAG_ECEF") = BG6_MAG_ECEF;
+    boost::python::scope().attr("BG6_ACCEL_ECEF") = BG6_ACCEL_ECEF;
+    boost::python::scope().attr("BG6_LINEAR_ACCEL_ECEF") = BG6_LINEAR_ACCEL_ECEF;
+    boost::python::scope().attr("BG6_POS_U") = BG6_POS_U;
+    boost::python::scope().attr("BG6_VEL_U") = BG6_VEL_U;
 
 
     // vn_errorCodes.h
@@ -94,6 +258,10 @@ BOOST_PYTHON_MODULE(vectornav)
     // vn100.h (not implemented all)
     boost::python::class_<Vn100>("Vn100");
     boost::python::def( "vn100_connect", &vn100_connect );
+    boost::python::def( "vn100_disconnect", &vn100_disconnect );
     boost::python::def( "vn100_setAsynchronousDataOutputType", &vn100_setAsynchronousDataOutputType );
+    boost::python::def( "vn100_setBinaryOutput1Configuration", &vn100_setBinaryOutput1Configuration );
     boost::python::def( "vn100_getCurrentAsyncData", &vn100_getCurrentAsyncData );
+    boost::python::def( "vn100_registerAsyncDataReceivedListener", &vn100_registerAsyncDataReceivedListener_wrapper );
+    boost::python::def( "vn100_unregisterAsyncDataReceivedListener", &vn100_unregisterAsyncDataReceivedListener_wrapper );
 }
