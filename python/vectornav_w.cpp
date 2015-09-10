@@ -124,7 +124,6 @@ BOOST_PYTHON_MODULE(vectornav)
     .def_readwrite("velU", &VnDeviceCompositeData::velU)
     .def_readwrite("attitudeUncertainty", &VnDeviceCompositeData::attitudeUncertainty);
 
-    //boost::python::def( "VnDeviceNewAsyncDataReceivedListener", &VnDeviceNewAsyncDataReceivedListener );
 
     boost::python::scope().attr("VNASYNC_OFF") = VNASYNC_OFF;
     boost::python::scope().attr("VNASYNC_VNYPR") = VNASYNC_VNYPR;
