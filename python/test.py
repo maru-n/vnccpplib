@@ -11,7 +11,7 @@ vn100 = Vn100()
 
 device = sys.argv[1]
 
-err_code = vn100_connect(vn100, device, 115200)
+err_code = vn100_connect(vn100, device, int(sys.argv[2]))
 if err_code != VNERR_NO_ERROR:
     print('vn100_connect Error code: %d' % err_code)
     exit()
