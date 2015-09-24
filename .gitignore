@@ -1,2 +1,3 @@
 *.o
 *.so
+python/cpp_test/main
