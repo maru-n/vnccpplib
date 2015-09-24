@@ -3,19 +3,19 @@
  *
  * \section LICENSE
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 VectorNav Technologies, LLC
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -61,11 +61,12 @@ typedef uint32_t VN_ERROR_CODE;
 #define VNERR_SENSOR_NOT_ENOUGH_PARAMETERS		12	/**< Sensor reported a not enough parameters error. */
 #define VNERR_SENSOR_TOO_MANY_PARAMETERS		13	/**< Sensor reported a too many parameters error. */
 #define VNERR_SENSOR_INVALID_PARAMETER			14	/**< Sensor reported an invalid parameter error. */
-#define VNERR_SENSOR_UNAUTHORIZED_ACCESS		15	/**< Sensor reported an unauthorized access error. */
-#define VNERR_SENSOR_WATCHDOG_RESET				16	/**< Sensor reported a watchdog reset error. */
-#define	VNERR_SENSOR_OUTPUT_BUFFER_OVERFLOW		17	/**< Sensor reported an output buffer overflow error. */
-#define	VNERR_SENSOR_INSUFFICIENT_BAUD_RATE		18	/**< Sensor reported an insufficient baudrate error. */
-#define VNERR_SENSOR_ERROR_BUFFER_OVERFLOW		19	/**< Sensor reported an error buffer overflow error. */
+#define VNERR_SENSOR_INVALID_REGISTER			15	/**< Sensor reported an invalid register error. */
+#define VNERR_SENSOR_UNAUTHORIZED_ACCESS		16	/**< Sensor reported an unauthorized access error. */
+#define VNERR_SENSOR_WATCHDOG_RESET				17	/**< Sensor reported a watchdog reset error. */
+#define	VNERR_SENSOR_OUTPUT_BUFFER_OVERFLOW		18	/**< Sensor reported an output buffer overflow error. */
+#define	VNERR_SENSOR_INSUFFICIENT_BAUD_RATE		19	/**< Sensor reported an insufficient baudrate error. */
+#define VNERR_SENSOR_ERROR_BUFFER_OVERFLOW		20	/**< Sensor reported an error buffer overflow error. */
 /** @} */
 
 #endif /* _VN_ERRORCODES_H_ */
