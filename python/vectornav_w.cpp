@@ -262,7 +262,10 @@ BOOST_PYTHON_MODULE(vectornav)
     boost::python::def( "vn100_connect", &vn100_connect );
     boost::python::def( "vn100_disconnect", &vn100_disconnect );
     boost::python::def( "vn100_setAsynchronousDataOutputType", &vn100_setAsynchronousDataOutputType );
+    boost::python::def( "vn100_setBinaryOutputConfiguration", &vn100_setBinaryOutputConfiguration );
     boost::python::def( "vn100_setBinaryOutput1Configuration", &vn100_setBinaryOutput1Configuration );
+    boost::python::def( "vn100_setBinaryOutput2Configuration", &vn100_setBinaryOutput2Configuration );
+    boost::python::def( "vn100_setBinaryOutput3Configuration", &vn100_setBinaryOutput3Configuration );
     boost::python::def( "vn100_getCurrentAsyncData", &vn100_getCurrentAsyncData );
     boost::python::def( "vn100_registerAsyncDataReceivedListener", &vn100_registerAsyncDataReceivedListener_wrapper );
     boost::python::def( "vn100_unregisterAsyncDataReceivedListener", &vn100_unregisterAsyncDataReceivedListener_wrapper );
