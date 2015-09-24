@@ -1,10 +1,5 @@
 #include <boost/python.hpp>
 #include "vectornav.h"
-/*
-#include <string>
-#include <typeinfo>
-#include <cxxabi.h>
-*/
 
 boost::python::api::object py_async_data_received_listener;
 void async_data_received_listener_wrapper(void* sender, VnDeviceCompositeData* data)
