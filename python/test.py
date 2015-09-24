@@ -13,7 +13,7 @@ device = sys.argv[1]
 
 err_code = vn100_connect(vn100, device, 115200)
 if err_code != VNERR_NO_ERROR:
-    print('Error code: %d' % err_code)
+    print('vn100_connect Error code: %d' % err_code)
     exit()
 
 err_code = vn100_setAsynchronousDataOutputType(
@@ -21,7 +21,7 @@ err_code = vn100_setAsynchronousDataOutputType(
     VNASYNC_OFF,
     True)
 if err_code != VNERR_NO_ERROR:
-    print('Error code: %d' % err_code)
+    print('vn100_setAsynchronousDataOutputType Error code: %d' % err_code)
     exit()
 
 err_code = vn100_setBinaryOutput1Configuration(
@@ -34,7 +34,7 @@ err_code = vn100_setBinaryOutput1Configuration(
     True)
 
 if err_code != VNERR_NO_ERROR:
-    print('Error code: %d' % err_code)
+    print('vn100_setBinaryOutput1Configuration Error code: %d' % err_code)
     exit()
 
 err_code = vn100_registerAsyncDataReceivedListener(vn100, listener);
