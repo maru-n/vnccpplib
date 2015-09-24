@@ -28,10 +28,11 @@ err_code = vn100_setBinaryOutput1Configuration(
     vn100,
     BINARY_ASYNC_MODE_SERIAL_2,
     2,
-    BG1_YPR,
-    BG3_NONE,
+    BG1_TIME_STARTUP|BG1_DELTA_THETA|BG1_DELTA_THETA|BG1_QTN,
+    BG3_ACCEL|BG3_GYRO|BG3_UNCOMP_MAG,
     BG5_NONE,
     True)
+
 if err_code != VNERR_NO_ERROR:
     print('Error code: %d' % err_code)
     exit()
