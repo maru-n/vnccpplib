@@ -4,6 +4,16 @@ from vectornav import *
 import time
 import sys
 
+class ListenerTestClass(object):
+    """docstring for ListenerTestClass"""
+    def __init__(self):
+        super(ListenerTestClass, self).__init__()
+
+    def listener(self, sender, data):
+        #print(self)
+        print("python_listener ypr:   % 10.7f % 10.7f % 10.7f" % (data.ypr.yaw, data.ypr.pitch, data.ypr.roll))
+
+
 def listener(sender, data):
     print("python_listener ypr:   % 10.7f % 10.7f % 10.7f" % (data.ypr.yaw, data.ypr.pitch, data.ypr.roll))
 
@@ -27,7 +37,7 @@ if err_code != VNERR_NO_ERROR:
 err_code = vn100_setBinaryOutput1Configuration(
     vn100,
     BINARY_ASYNC_MODE_SERIAL_2,
-    2,
+    8,
     BG1_TIME_STARTUP|BG1_DELTA_THETA|BG1_DELTA_THETA|BG1_QTN,
     BG3_ACCEL|BG3_GYRO|BG3_UNCOMP_MAG,
     BG5_NONE,
@@ -38,9 +48,10 @@ if err_code != VNERR_NO_ERROR:
     exit()
 
 err_code = vn100_registerAsyncDataReceivedListener(vn100, listener);
+#a = ListenerTestClass()
+#err_code = vn100_registerAsyncDataReceivedListener(vn100, a.listener);
 
-while True:
-    time.sleep(0.1)
+time.sleep(5.0)
 
 err_code = vn100_unregisterAsyncDataReceivedListener(vn100, listener);
 err_code = vn100_disconnect(vn100);
