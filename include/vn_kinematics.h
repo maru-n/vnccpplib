@@ -34,19 +34,19 @@
  * \brief Holds attitude data expressed in yaw, pitch, roll format.
  */
 typedef struct {
-	double	yaw;		/**< Yaw */
-	double	pitch;		/**< Pitch */
-	double	roll;		/**< Roll */
+	float	yaw;		/**< Yaw */
+	float	pitch;		/**< Pitch */
+	float	roll;		/**< Roll */
 } VnYpr;
 
 /**
  * \brief Holds attitude data expressed in quaternion format.
  */
 typedef struct {
-	double x;		/**< X */
-	double y;		/**< Y */
-	double z;		/**< Z */
-	double w;		/**< W */
+	float x;		/**< X */
+	float y;		/**< Y */
+	float z;		/**< Z */
+	float w;		/**< W */
 } VnQuaternion;
 
 #endif /* _VN_KINEMATICS_H */

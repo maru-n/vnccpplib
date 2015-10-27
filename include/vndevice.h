@@ -271,7 +271,7 @@ typedef struct {
 	VnVector3		accelerationUncompensated;	/**< Uncompensated acceleration measurements. */
 	VnVector3		magneticUncompensated;		/**< Uncompensated magnetic measurements. */
 	double			pressure;					/**< Pressure measurements. */
-	double			deltaTime;					/**< Time interval that the delta angles and velocities are integrated over. */
+	float			deltaTime;					/**< Time interval that the delta angles and velocities are integrated over. */
 	VnVector3		deltaTheta;					/**< The delta rotation angles due to rotation since the values were last output by the device. */
 	VnVector3		deltaVelocity;				/**< The delta velocity due to motion since the values were last output by the device. */
 	uint16_t		insStatus;					/**< Status flags for the INS filter. */

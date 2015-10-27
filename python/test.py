@@ -36,7 +36,7 @@ err_code = vn100_setBinaryOutput1Configuration(
     BINARY_ASYNC_MODE_SERIAL_2,
     8,
     BG1_YPR,
-    BG3_NONE,
+    BG3_ACCEL,
     BG5_NONE,
     True)
 print("vn100_setBinaryOutput1Configuration: %d" % err_code)

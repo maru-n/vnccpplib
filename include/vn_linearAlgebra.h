@@ -39,24 +39,24 @@
  * \brief A vector of length 3.
  */
 typedef struct {
-	double	c0;		/**< Component 0 */
-	double	c1;		/**< Component 1 */
-	double	c2;		/**< Component 2 */
+	float	c0;		/**< Component 0 */
+	float	c1;		/**< Component 1 */
+	float	c2;		/**< Component 2 */
 } VnVector3;
 
 /**
  * \brief A 3x3 matrix.
  */
 typedef struct {
-	double c00;		/**< Component 0,0 */
-	double c01;		/**< Component 0,1 */
-	double c02;		/**< Component 0,2 */
-	double c10;		/**< Component 1,0 */
-	double c11;		/**< Component 1,1 */
-	double c12;		/**< Component 1,2 */
-	double c20;		/**< Component 2,0 */
-	double c21;		/**< Component 2,1 */
-	double c22;		/**< Component 2,2 */
+	float c00;		/**< Component 0,0 */
+	float c01;		/**< Component 0,1 */
+        float c02;		/**< Component 0,2 */
+	float c10;		/**< Component 1,0 */
+	float c11;		/**< Component 1,1 */
+	float c12;		/**< Component 1,2 */
+	float c20;		/**< Component 2,0 */
+	float c21;		/**< Component 2,1 */
+	float c22;		/**< Component 2,2 */
 } VnMatrix3x3;
 
 #endif /* _VN_LINEAR_ALGEBRA_H_ */
