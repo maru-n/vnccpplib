@@ -88,10 +88,8 @@ int main()
 
 void asyncDataListener(void* sender, VnDeviceCompositeData* data)
 {
-	/*
 	printf("  %+#7.2f %+#7.2f %+#7.2f\n",
 		data->ypr.yaw,
 		data->ypr.pitch,
 		data->ypr.roll);
-		*/
 }
