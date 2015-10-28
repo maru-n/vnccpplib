@@ -1749,7 +1749,6 @@ void* vndevice_communicationHandler(
 
 			/* Make sure we are not overrunning our BINARY buffer. */
 			if (binaryBufferIndex == BINARY_RECEIVE_BUFFER_SIZE) {
-				printf("overflow\n");
 
 				/* We are about to overflow our buffer. Reset the index and
 				   start looking for another BINARY packet. */
@@ -1805,7 +1804,6 @@ void* vndevice_communicationHandler(
 							expectedBinaryPacketLength = 2 + expectedNumberOfBinaryGroupFieldBytes + payloadLength + 2;
 
 							if (expectedBinaryPacketLength > BINARY_RECEIVE_BUFFER_SIZE) {
-								printf("overflow2\n");
 
 								/* This packet will be too large for our buffer
 								   and is likely not a valid packet. */
