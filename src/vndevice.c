@@ -1,3 +1,4 @@
+
 /**
  * \cond INCLUDE_PRIVATE
  * \file
@@ -37,7 +38,8 @@
 
 /*#define COMMAND_HEADER_SIZE				5*/
 #define ASCII_RECEIVE_BUFFER_SIZE		256
-#define BINARY_RECEIVE_BUFFER_SIZE		256
+//#define BINARY_RECEIVE_BUFFER_SIZE		256
+#define BINARY_RECEIVE_BUFFER_SIZE		512
 #define READ_BUFFER_SIZE				256
 #define NUMBER_OF_MILLISECONDS_TO_SLEEP_AFTER_RECEIVING_NO_BYTES_ON_COM_PORT_READ	5
 #define DEFAULT_TIMEOUT_IN_MS			5000
@@ -1748,6 +1750,7 @@ void* vndevice_communicationHandler(
 
 			/* Make sure we are not overrunning our BINARY buffer. */
 			if (binaryBufferIndex == BINARY_RECEIVE_BUFFER_SIZE) {
+				printf("overflow\n");
 
 				/* We are about to overflow our buffer. Reset the index and
 				   start looking for another BINARY packet. */
@@ -1803,6 +1806,7 @@ void* vndevice_communicationHandler(
 							expectedBinaryPacketLength = 2 + expectedNumberOfBinaryGroupFieldBytes + payloadLength + 2;
 
 							if (expectedBinaryPacketLength > BINARY_RECEIVE_BUFFER_SIZE) {
+								printf("overflow2\n");
 
 								/* This packet will be too large for our buffer
 								   and is likely not a valid packet. */
